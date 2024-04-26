@@ -7,7 +7,7 @@ import { FETCH_URL_WEATHER } from '../constat/Api';
 const LoadToLocalStor = () => {
 
     const [weatherData, setWeatherData] = useState([]);
-    const millTimes = 1000 * 60;
+    const millTimes = 1000 * 60*5;
 
     useEffect(() => {
 

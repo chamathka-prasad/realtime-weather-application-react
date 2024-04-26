@@ -10,7 +10,7 @@ const App = () => {
   return (
 
     <>
-      <LoadToLocalStor />
+      <LoadToLocalStor/>
       <Routes>
         <Route path='/' element={<Context />} />
         <Route path='singleView' element={<SingleView />} />

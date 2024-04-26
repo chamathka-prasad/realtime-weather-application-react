@@ -13,14 +13,24 @@ const LoadToLocalStor = () => {
 
 
         var vr = JSON.parse(localStorage.getItem("wet"));
-        console.log(vr.time + " " + Date.now());
-        if ((Date.now() - vr.time) < millTimes) {
-            console.log("podi");
-            console.log(Date.now() - vr.time);
+
+
+        if (vr == null) {
+
+            getDataFromServer();
 
         } else {
-            console.log(Date.now() - vr.time);
-            console.log("timeCheck");
+
+           
+            if ((Date.now() - vr.time) > millTimes) {
+                getDataFromServer();
+            } 
+        }
+
+
+
+
+        function getDataFromServer() {
 
             var data = List.List;
 
@@ -61,14 +71,14 @@ const LoadToLocalStor = () => {
                         setWeatherData(weather);
 
 
-                        console.log("wda");
+                        
                         const newData = {
                             time: Date.now(),
                             data: weather,
                         };
                         localStorage.setItem("wet", JSON.stringify(newData));
 
-                        console.log(localStorage.getItem("wet") + " wet data");
+                   
                         vr = JSON.parse(localStorage.getItem("wet"));
 
                     } catch (error) {
@@ -86,13 +96,12 @@ const LoadToLocalStor = () => {
             } catch (error) {
                 console.log(error);
             }
-
-
         }
 
 
 
-    }, []);
+    }, [weatherData]);
+
 
 }
 

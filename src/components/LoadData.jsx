@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
-
+import List from '../cities.json'
+import { API_WEATHER } from '../constat/WeatherConstants';
+import { FETCH_URL_WEATHER } from '../constat/Api';
 import image1 from '../assets/img/image1.png'
 import image2 from '../assets/img/image2.png'
 import image3 from '../assets/img/image3.png'
@@ -8,25 +10,106 @@ import image5 from '../assets/img/image5.png'
 import { RiSendPlaneLine } from "react-icons/ri";
 import SingleView from './SingleView'
 import { json, useNavigate } from 'react-router-dom'
-import { ICON_LINK_URL } from '../constat/WeatherConstants' 
+import { ICON_LINK_URL } from '../constat/WeatherConstants'
 import { MONTHS_ARRAY } from '../constat/WeatherConstants'
+import LoadToLocalStor from './LoadToLocalStor'
 
 const LoadData = () => {
 
     const navigate = useNavigate();
     const [weatherData, setWeatherData] = useState([]);
 
+
     useEffect(() => {
 
         try {
 
-            console.log(localStorage.getItem("wet") + " wet data");
+           
             var allData = JSON.parse(localStorage.getItem("wet"));
-            setWeatherData(allData.data);
-            // setWeatherData(weather);
-            console.log("wda");
 
-            // localStorage.setItem("wet", JSON.stringify(newData));
+            if (allData == null) {
+
+              
+                // 
+
+
+
+
+                var data = List.List;
+
+
+                var promises = new Array();
+
+                try {
+
+
+                    data.forEach(element => {
+                        promises.push(fetch(FETCH_URL_WEATHER + element.CityCode + "&units=metric&appid=" + API_WEATHER));
+
+                    });
+
+
+                    async function filterData() {
+
+                        const resp = await Promise.allSettled(promises);
+                        const fulfilledArray = [];
+                        resp.map(objects => {
+                            if (objects.status === "fulfilled") {
+                                fulfilledArray.push(objects.value);
+                            }
+                        })
+
+                        const weather = await Promise.all(fulfilledArray.map((item) => {
+                            return item.json();
+                        }))
+
+
+
+
+
+
+                        try {
+
+
+                            setWeatherData(weather);
+
+
+                            
+                            const newData = {
+                                time: Date.now(),
+                                data: weather,
+                            };
+                            localStorage.setItem("wet", JSON.stringify(newData));
+
+                            
+                           var vr = JSON.parse(localStorage.getItem("wet"));
+
+                        } catch (error) {
+                            console.log(error);
+
+
+                        }
+
+
+
+
+                    }
+                    filterData();
+
+                } catch (error) {
+                    console.log(error);
+                }
+
+                // 
+
+
+
+            } else {
+                setWeatherData(allData.data);
+            }
+
+
+
 
 
 
@@ -58,7 +141,7 @@ const LoadData = () => {
                     var image;
                     var imgNumber = ind % 5;
                     var des = ind % 2;
-                    console.log("img number " + imgNumber);
+                
                     if (imgNumber == 0) {
                         image = image1;
                     } else if (imgNumber == 1) {
@@ -84,9 +167,9 @@ const LoadData = () => {
                     var sunS = new Date(element.sys.sunset * 1000);
                     var stat = d.toLocaleTimeString().split(" ");
                     var vis = element.visibility / 1000;
-                    var iconLink =  ICON_LINK_URL+element.weather[0].icon+"@2x.png";
+                    var iconLink = ICON_LINK_URL + element.weather[0].icon + "@2x.png";
                     if (des == 0) {
-                        
+
                         return (
 
 
@@ -107,7 +190,7 @@ const LoadData = () => {
                                                     {d.getHours() + "." + d.getMinutes() + " " + stat[1] + " " + month[d.getMonth()] + " " + d.getDate()}
                                                 </h6>
 
-                                                <img src={iconLink}  height={40} alt="" /> <span className='textImg'>{element.weather[0].description}</span>
+                                                <img src={iconLink} height={40} alt="" /> <span className='textImg'>{element.weather[0].description}</span>
                                             </div>
                                             <div className="col-6 text-center">
                                                 <h1 className="h1">{element.main.temp} &#8451;</h1>
@@ -192,7 +275,7 @@ const LoadData = () => {
                                                 <h6>
                                                     {d.getHours() + "." + d.getMinutes() + " " + stat[1] + " " + month[d.getMonth()] + " " + d.getDate()}
                                                 </h6>
-                                                <img src={iconLink}  height={40} alt="" /> <span className='textImg'>{element.weather[0].description}</span>
+                                                <img src={iconLink} height={40} alt="" /> <span className='textImg'>{element.weather[0].description}</span>
                                             </div>
                                             <div className="col-6 text-center">
                                                 <h1 className="h1">{element.main.temp} &#8451;</h1>

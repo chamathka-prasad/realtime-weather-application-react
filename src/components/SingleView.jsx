@@ -29,7 +29,7 @@ const SingleView = () => {
 
 
 
-    console.log("wada  " + element.id);
+ 
     var d = new Date(element.dt * 1000);
     var options = { timeZone: 'Asia/Colombo' };
     const month = MONTHS_ARRAY;

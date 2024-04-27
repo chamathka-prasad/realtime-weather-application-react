@@ -20,14 +20,17 @@ const LoadData = () => {
     const [weatherData, setWeatherData] = useState([]);
 
 
+
     useEffect(() => {
+
+
 
         try {
 
 
             var allData = JSON.parse(localStorage.getItem("wet"));
 
-            if (allData== null || allData.data.length == 0) {
+            if (allData == null || allData.data.length == 0) {
 
 
                 // 
@@ -75,6 +78,7 @@ const LoadData = () => {
 
 
 
+
                             const newData = {
                                 time: Date.now(),
                                 data: weather,
@@ -106,6 +110,11 @@ const LoadData = () => {
 
             } else {
                 setWeatherData(allData.data);
+
+
+
+
+
             }
 
 

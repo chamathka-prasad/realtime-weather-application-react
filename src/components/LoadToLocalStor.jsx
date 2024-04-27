@@ -3,31 +3,24 @@ import React, { useEffect, useState } from 'react'
 import List from '../cities.json'
 import { API_WEATHER } from '../constat/WeatherConstants';
 import { FETCH_URL_WEATHER } from '../constat/Api';
+import { RELOAD_TIME } from '../constat/WeatherConstants';
 
 const LoadToLocalStor = () => {
 
     const [weatherData, setWeatherData] = useState([]);
-    const millTimes = 1000 * 60*5;
+ 
 
     useEffect(() => {
 
-
-        var vr = JSON.parse(localStorage.getItem("wet"));
-
-
-        if (vr == null) {
+      
+        getDataFromServer();
+        setInterval(() => {
+         
+    
 
             getDataFromServer();
 
-        } else {
-
-           
-            if ((Date.now() - vr.time) > millTimes) {
-                getDataFromServer();
-            } 
-        }
-
-
+        }, RELOAD_TIME);
 
 
         function getDataFromServer() {
@@ -71,15 +64,15 @@ const LoadToLocalStor = () => {
                         setWeatherData(weather);
 
 
-                        
+
                         const newData = {
                             time: Date.now(),
                             data: weather,
                         };
                         localStorage.setItem("wet", JSON.stringify(newData));
 
-                   
-                        vr = JSON.parse(localStorage.getItem("wet"));
+
+                      
 
                     } catch (error) {
                         console.log(error);
@@ -98,9 +91,7 @@ const LoadToLocalStor = () => {
             }
         }
 
-
-
-    }, [weatherData]);
+    }, []);
 
 
 }

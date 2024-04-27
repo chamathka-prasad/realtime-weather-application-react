@@ -24,12 +24,12 @@ const LoadData = () => {
 
         try {
 
-           
+
             var allData = JSON.parse(localStorage.getItem("wet"));
 
-            if (allData == null) {
+            if (allData== null || allData.data.length == 0) {
 
-              
+
                 // 
 
 
@@ -74,15 +74,15 @@ const LoadData = () => {
                             setWeatherData(weather);
 
 
-                            
+
                             const newData = {
                                 time: Date.now(),
                                 data: weather,
                             };
                             localStorage.setItem("wet", JSON.stringify(newData));
 
-                            
-                           var vr = JSON.parse(localStorage.getItem("wet"));
+
+                            var vr = JSON.parse(localStorage.getItem("wet"));
 
                         } catch (error) {
                             console.log(error);
@@ -141,7 +141,7 @@ const LoadData = () => {
                     var image;
                     var imgNumber = ind % 5;
                     var des = ind % 2;
-                
+
                     if (imgNumber == 0) {
                         image = image1;
                     } else if (imgNumber == 1) {

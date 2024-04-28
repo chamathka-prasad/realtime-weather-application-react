@@ -184,13 +184,19 @@ const LoadData = () => {
 
                             <div className="col-sm-12 col-md-6 col-xl-4 mt-5 offset-xl-2">
 
+
                                 <div className="card cardColor" onClick={() => {
 
                                     navigate("singleView?id=" + element.id);
                                 }} style={{ backgroundColor: "rgb(41, 40, 40)", border: "none" }}>
 
-                                    <img className="card-img-top" src={image} />
+                                    <img className="card-img-top z-0" src={image} />
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="z-1 bi bi-x-lg position-absolute clos" viewBox="0 0 16 16">
+                                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                                    </svg>
                                     <div className="card-img-overlay">
+
                                         <div className="row text-light mt-3">
 
                                             <div className="col-6 text-center mb-md-4">
@@ -276,6 +282,10 @@ const LoadData = () => {
 
                                     navigate("singleView?id=" + element.id);
                                 }}>
+                                    <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="z-1 bi bi-x-lg position-absolute clos" viewBox="0 0 16 16">
+                                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                                    </svg>
+                                    <img className="card-img-top z-0" src={image} />
                                     <div className="card-img-overlay mt-3">
                                         <div className="row text-light ">
 
@@ -295,7 +305,7 @@ const LoadData = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <img className="card-img-top " src={image} />
+                                    
 
                                     <div className="card-body bgColourComp">
                                         <div className="row cardTextcolor">

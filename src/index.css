@@ -8,7 +8,18 @@
     color: rgb(167, 167, 167);
    
 }
+.clos{
+    margin-right: 0px;
+    margin-left: 94%;
+    margin-top: 2%;
+    color: white;
+ 
+}
+.clos:hover{
 
+    color: black;
+    cursor: none;
+}
 .fooot{
 
     height: 70px;

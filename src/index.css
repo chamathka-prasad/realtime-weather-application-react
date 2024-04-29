@@ -4,9 +4,14 @@
   
   
 }
+
 .ftext{
     color: rgb(167, 167, 167);
    
+}
+
+.citIn{
+    background-color: #30333d;
 }
 .clos{
     margin-right: 0px;
@@ -82,4 +87,7 @@
     background-size: contain;
     /* background-size:auto; */
     background-color: #1f2127;
+}
+.texUpBodIn{
+    color: whitesmoke;
 }

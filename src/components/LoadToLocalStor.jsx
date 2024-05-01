@@ -24,6 +24,7 @@ const LoadToLocalStor = () => {
 
 
         function getDataFromServer() {
+        
 
             var data = List.List;
 

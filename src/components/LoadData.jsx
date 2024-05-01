@@ -13,7 +13,7 @@ import { json, useNavigate } from 'react-router-dom'
 import { ICON_LINK_URL } from '../constat/WeatherConstants'
 import { MONTHS_ARRAY } from '../constat/WeatherConstants'
 import LoadToLocalStor from './LoadToLocalStor'
-
+import { RELOAD_TIME } from '../constat/WeatherConstants';
 const LoadData = () => {
 
     const navigate = useNavigate();
@@ -21,9 +21,21 @@ const LoadData = () => {
 
 
 
+
     useEffect(() => {
+        loadDataToComponent();
+        setInterval(
+            loadDataToComponent
+ 
+            , 60000);
 
 
+    }, []);
+    var ind = 0;
+
+
+    function loadDataToComponent() {
+   
 
         try {
 
@@ -35,81 +47,23 @@ const LoadData = () => {
 
                 // 
 
-
-
-
-                var data = List.List;
-
-
-                var promises = new Array();
-
-                try {
-
-
-                    data.forEach(element => {
-                        promises.push(fetch(FETCH_URL_WEATHER + element.CityCode + "&units=metric&appid=" + API_WEATHER));
-
-                    });
-
-
-                    async function filterData() {
-
-                        const resp = await Promise.allSettled(promises);
-                        const fulfilledArray = [];
-                        resp.map(objects => {
-                            if (objects.status === "fulfilled") {
-                                fulfilledArray.push(objects.value);
-                            }
-                        })
-
-                        const weather = await Promise.all(fulfilledArray.map((item) => {
-                            return item.json();
-                        }))
-
-
-
-
-
-
-                        try {
-
-
-                            setWeatherData(weather);
-
-
-
-
-                            const newData = {
-                                time: Date.now(),
-                                data: weather,
-                            };
-                            localStorage.setItem("wet", JSON.stringify(newData));
-
-
-                            var vr = JSON.parse(localStorage.getItem("wet"));
-
-                        } catch (error) {
-                            console.log(error);
-
-
-                        }
-
-
-
-
-                    }
-                    filterData();
-
-                } catch (error) {
-                    console.log(error);
-                }
+                reloadNewData();
 
                 // 
 
 
 
             } else {
-                setWeatherData(allData.data);
+
+
+                if (Date.now() - allData.time > RELOAD_TIME) {
+
+                    reloadNewData();
+                }
+                else {
+                    setWeatherData(allData.data);
+                }
+
 
 
 
@@ -127,15 +81,77 @@ const LoadData = () => {
 
 
         }
+    }
+
+    function reloadNewData() {
+
+
+        var data = List.List;
+
+
+        var promises = new Array();
+
+        try {
+
+
+            data.forEach(element => {
+                promises.push(fetch(FETCH_URL_WEATHER + element.CityCode + "&units=metric&appid=" + API_WEATHER));
+
+            });
+
+
+            async function filterData() {
+
+                const resp = await Promise.allSettled(promises);
+                const fulfilledArray = [];
+                resp.map(objects => {
+                    if (objects.status === "fulfilled") {
+                        fulfilledArray.push(objects.value);
+                    }
+                })
+
+                const weather = await Promise.all(fulfilledArray.map((item) => {
+                    return item.json();
+                }))
 
 
 
 
 
 
+                try {
 
-    }, []);
-    var ind = 0;
+
+                    setWeatherData(weather);
+
+
+
+
+                    const newData = {
+                        time: Date.now(),
+                        data: weather,
+                    };
+                    localStorage.setItem("wet", JSON.stringify(newData));
+
+
+                    var vr = JSON.parse(localStorage.getItem("wet"));
+
+                } catch (error) {
+                    console.log(error);
+
+
+                }
+
+
+
+
+            }
+            filterData();
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
 
@@ -282,7 +298,7 @@ const LoadData = () => {
 
                                     navigate("singleView?id=" + element.id);
                                 }}>
-                                    <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="z-1 bi bi-x-lg position-absolute clos" viewBox="0 0 16 16">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="z-1 bi bi-x-lg position-absolute clos" viewBox="0 0 16 16">
                                         <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
                                     </svg>
                                     <img className="card-img-top z-0" src={image} />
@@ -305,7 +321,7 @@ const LoadData = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    
+
 
                                     <div className="card-body bgColourComp">
                                         <div className="row cardTextcolor">

@@ -1,93 +1,46 @@
-.cardColor{
-    background-color: rgb(41, 40, 40);
-    border: none;
-  
-  
+.ftext {
+  color: rgb(167, 167, 167);
 }
 
-.ftext{
-    color: rgb(167, 167, 167);
-   
+.citIn {
+  background-color: #30333d;
+}
+.clos {
+  margin-right: 0px;
+  margin-left: 94%;
+  margin-top: 2%;
+  color: white;
+}
+.clos:hover {
+  color: black;
+  cursor: none;
+}
+.fooot {
+  height: 70px;
+  justify-content: center;
+  align-items: center;
+  background-color: #30333d;
 }
 
-.citIn{
-    background-color: #30333d;
-}
-.clos{
-    margin-right: 0px;
-    margin-left: 94%;
-    margin-top: 2%;
-    color: white;
- 
-}
-.clos:hover{
-
-    color: black;
-    cursor: none;
-}
-.fooot{
-
-    height: 70px;
-    justify-content: center;
-    align-items: center;
-    background-color: #30333d;
-}
-.textImg{
-    font-size:13px;
-}
-.textDev{
-    font-size: small;
-}
-.bgColourComp{
-    background-color: rgb(41, 40, 40);
-    border: none;
-  
-}
-.cs:hover{
-    cursor: pointer;
+.cs:hover {
+  cursor: pointer;
 }
 
-.carr{
-    background-color: rgb(41, 40, 40);
-    border: none;
+.btnColorChange {
+  background-color: rgb(98, 23, 168);
+  font-weight: bold;
+  color: azure;
 }
-.cardColor:hover{
-    cursor: pointer;
-}
-.cardTextcolor{
-    color: rgb(223, 223, 223);
-}
-.borderSet{
-    border: solid;
-    border-color:#383b47;
-    border-width: 1px;
-    border-left: 0px;
-    border-top: 0px;
-    border-bottom: 0px;
-   
-
-}
-.btnColorChange{
-    background-color: rgb(98, 23, 168);
-    font-weight: bold;
-    color: azure;
-
-   
-}
-.dtext{
-
-    font-size: x-small;
+.dtext {
+  font-size: x-small;
 }
 
-.back{
-    background-image: url("assets/img/backdash.png");
-    
-    background-repeat: no-repeat;
-    
-    background-size: contain;
-    /* background-size:auto; */
-    background-color: #1f2127;
-}
-.texUpBodIn{
-    color: whitesmoke;
+.back {
+  background-image: url("assets/img/backdash.png");
+
+  background-repeat: no-repeat;
+
+  background-size: contain;
+
+  background-color: #1f2127;
 }

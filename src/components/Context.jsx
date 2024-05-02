@@ -1,23 +1,14 @@
-import React from 'react'
-import UpBody from '../components/UpBody'
-import LoadData from '../components/LoadData'
-
+import React from "react";
+import UpBody from "../components/UpBody";
+import LoadData from "../components/LoadData";
 
 const Context = () => {
   return (
     <>
-
-      <UpBody/>
+      <UpBody />
       <LoadData />
-
     </>
+  );
+};
 
-
-
-
-
-  )
-}
-
-export default Context
-
+export default Context;

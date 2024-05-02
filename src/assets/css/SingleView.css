@@ -1,0 +1,23 @@
+.borderSet {
+  border: solid;
+  border-color: #383b47;
+  border-width: 1px;
+  border-left: 0px;
+  border-top: 0px;
+  border-bottom: 0px;
+}
+.cardColor {
+  background-color: rgb(41, 40, 40);
+  border: none;
+}
+.carr {
+  background-color: rgb(41, 40, 40);
+  border: none;
+}
+.bgColourComp {
+  background-color: rgb(41, 40, 40);
+  border: none;
+}
+.textDev {
+  font-size: small;
+}

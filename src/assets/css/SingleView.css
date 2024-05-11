@@ -1,23 +1,48 @@
-.borderSet {
-  border: solid;
-  border-color: #383b47;
-  border-width: 1px;
-  border-left: 0px;
-  border-top: 0px;
-  border-bottom: 0px;
-}
-.cardColor {
-  background-color: rgb(41, 40, 40);
-  border: none;
-}
-.carr {
-  background-color: rgb(41, 40, 40);
-  border: none;
-}
-.bgColourComp {
-  background-color: rgb(41, 40, 40);
-  border: none;
-}
-.textDev {
-  font-size: small;
+.singlecsssWrap {
+  .borderSet {
+    border: solid;
+    border-color: #383b47;
+    border-width: 1px;
+    border-left: 0px;
+    border-top: 0px;
+    border-bottom: 0px;
+  }
+  .backArrow {
+    width: 60px;
+    height: 60px;
+  }
+  .singleborder {
+    border-color: #383b47;
+  }
+  .iconImg {
+    height: 50px;
+    margin-right: 10px;
+  }
+  .weatherDiscription {
+    margin-right: 5px;
+  }
+  .subTemp {
+    font-size: 13px;
+  }
+  .citTime {
+    font-size: 11px;
+  }
+  .cardColor {
+    background-color: #388ee7;
+    border: none;
+  }
+  .carr {
+    background-color: rgb(41, 40, 40);
+    border: none;
+  }
+  .bgColourComp {
+    background-color: rgb(41, 40, 40);
+    border: none;
+  }
+  .textDev {
+    font-size: small;
+  }
+  .cardTextcolor {
+    color: whitesmoke;
+  }
 }

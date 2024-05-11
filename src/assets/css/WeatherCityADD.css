@@ -1,0 +1,11 @@
+.weatherCityAddWrap {
+  .addCityBtn {
+    background-color: #6c5cd2;
+    color: whitesmoke;
+    border-radius: 7px;
+  }
+  .texUpBodIn {
+    background-color: #30333d;
+    border: none;
+  }
+}

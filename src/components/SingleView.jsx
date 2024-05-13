@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
-import logo from "../assets/img/logo.png";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import image1 from "../assets/img/blueBack.png";
 import { RiSendPlaneLine } from "react-icons/ri";
-import {
-  CITY_WEATHER_REQUEST_CODE,
-  MONTHS_ARRAY,
-} from "../constant/WeatherConstants";
+import { CITY_WEATHER_REQUEST_CODE } from "../constant/WeatherConstants";
 import "../assets/css/SingleView.css";
 import { WEATHER_ICON_REQUEST_CODE } from "../constant/WeatherConstants";
 import { getWeatherUrl } from "../helpers/api/ApiHelper";
@@ -37,7 +33,9 @@ const SingleView = () => {
           setElement(value);
         }
       })
-      .catch((error) => {});
+      .catch((error) => {
+        navigate("/");
+      });
   }, []);
 
   var cityTime;

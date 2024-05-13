@@ -5,61 +5,116 @@ import image3 from "../assets/img/image3.png";
 import image4 from "../assets/img/image4.png";
 import image5 from "../assets/img/image5.png";
 import { RiSendPlaneLine } from "react-icons/ri";
+import { CITY_WEATHER_REQUEST_CODE } from "../constant/WeatherConstants";
 import "../assets/css/LoadData.css";
+import List from "../data/cities.json";
 import { useNavigate } from "react-router-dom";
 import { RELOAD_TIME } from "../constant/WeatherConstants";
 import { getWeatherUrl } from "../helpers/api/ApiHelper";
 import { WEATHER_ICON_REQUEST_CODE } from "../constant/WeatherConstants";
 import Spinner from "./Spinner";
 import { DateHelper } from "../helpers/DateHelper";
+
 const LoadData = () => {
   const navigate = useNavigate();
   const [weatherData, setWeatherData] = useState([]);
-  const [cacheDataStatus, setCacheDataStatus] = useState(true);
 
-  function loadDataToComponent() {
-    try {
-      const getAllCacheData = async () => {
-        let url = window.location.origin;
-        let names = await caches.keys();
+  function getDataFromServer() {
+    var data = List.List;
 
-        names.forEach(async (name) => {
-          if ((name = import.meta.env.VITE_CACHES_NAME)) {
-            const cacheStorage = await caches.open(name);
+    async function checkAvailabilityOfTheCache() {
+      let names = await caches.keys();
 
-            const cachedResponse = await cacheStorage.match(url);
-            let data = await cachedResponse.json();
+      if (names.length == 0) {
+        insertDataTOCache();
+      } else {
+        if (names.includes(import.meta.env.VITE_CACHES_NAME)) {
+          checkTimeLenght(import.meta.env.VITE_CACHES_NAME);
+        }
+      }
+    }
 
-            setWeatherData(data.data);
-          }
+    checkAvailabilityOfTheCache();
+
+    async function checkTimeLenght(name) {
+      let url = window.location.origin;
+      let cacheStorage = await caches.open(name);
+      const cachedResponse = await cacheStorage.match(url);
+
+      let data = await cachedResponse.json();
+      if (Date.now() - data.time > RELOAD_TIME) {
+        insertDataTOCache();
+      } else {
+        setWeatherData(data.data);
+      }
+    }
+
+    async function insertDataTOCache() {
+      var promises = new Array();
+
+      try {
+        data.forEach(async (element) => {
+          promises.push(
+            fetch(getWeatherUrl(CITY_WEATHER_REQUEST_CODE, element.CityCode), {
+              method: "POST",
+            })
+          );
         });
-      };
 
-      getAllCacheData();
-    } catch (error) {
-      console.log(error);
+        async function filterData() {
+          const resp = await Promise.allSettled(promises);
+          const fulfilledArray = [];
+          resp.map((objects) => {
+            if (objects.status === "fulfilled") {
+              fulfilledArray.push(objects.value);
+            }
+          });
+
+          const weather = await Promise.all(
+            fulfilledArray.map((item) => {
+              return item.json();
+            })
+          );
+
+          if (weather.length != 0) {
+            try {
+              const newData = {
+                time: Date.now(),
+                data: weather,
+              };
+
+              const addDataIntoCache = (cacheName, url, response) => {
+                const data = new Response(JSON.stringify(response));
+
+                if ("caches" in window) {
+                  caches.open(cacheName).then((cache) => {
+                    cache.put(url, data);
+                  });
+                }
+              };
+              addDataIntoCache(
+                import.meta.env.VITE_CACHES_NAME,
+                window.location.origin,
+                newData
+              );
+
+              setWeatherData(weather);
+            } catch (error) {
+              console.log(error);
+            }
+          }
+        }
+        filterData();
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 
-  var stateOFWeatherDataGetFromLocalStor = true;
   useEffect(() => {
-    loadDataToComponent();
-
-    setTimeout(() => {
-      if (weatherData.length == 0) {
-        if (cacheDataStatus) {
-          setCacheDataStatus(false);
-        } else {
-          setCacheDataStatus(true);
-        }
-      } else {
-        if (stateOFWeatherDataGetFromLocalStor) {
-          setInterval(loadDataToComponent, RELOAD_TIME);
-          stateOFWeatherDataGetFromLocalStor = false;
-        }
-      }
-    }, 1000);
-  }, [cacheDataStatus]);
+    getDataFromServer();
+    setInterval(getDataFromServer, RELOAD_TIME);
+  }, []);
 
   if (weatherData.length == 0) {
     return <Spinner />;
@@ -70,7 +125,7 @@ const LoadData = () => {
       {weatherData.map((element) => {
         var image;
         var imgNumber = imageIndex % 5;
-        var des = imageIndex % 2;
+        var leftOrRight = imageIndex % 2;
 
         if (imgNumber == 0) {
           image = image1;
@@ -99,7 +154,7 @@ const LoadData = () => {
         var classNameForPosition =
           "col-sm-12 col-md-6 col-xl-4 mt-5 cardWrapper";
 
-        if (des == 0) {
+        if (leftOrRight == 0) {
           classNameForPosition = classNameForPosition + " offset-xl-2";
         }
 

@@ -19,7 +19,7 @@ const WeatherCityADD = () => {
                   />
 
                   <button
-                    className="btn btn-primary addCityBtn text-light fw-medium border-0"
+                    className="btn btn-primary addCityBtn fw-medium border-0"
                     type="button"
                     id="button-addon2"
                   >
